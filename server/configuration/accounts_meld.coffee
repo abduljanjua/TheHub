@@ -4,6 +4,7 @@ Accounts.updateOrCreateUserFromExternalService = (serviceName, serviceData, opti
 	if serviceName not in ['facebook', 'github', 'gitlab', 'google', 'meteor-developer', 'linkedin', 'twitter', 'sandstorm'] and serviceData._OAuthCustom isnt true
 		return
 
+
 	if serviceName is 'meteor-developer'
 		if _.isArray serviceData?.emails
 			serviceData.emails.sort (a, b) ->
