@@ -10,7 +10,7 @@ Meteor.methods
 			throw new Meteor.Error 'error-user-registration-secret', 'User registration is only allowed via Secret URL', { method: 'registerUser' }
 
 		RocketChat.validateEmailDomain(formData.email);
-
+		
 		userData =
 			email: s.trim(formData.email.toLowerCase())
 			password: formData.pass
@@ -21,8 +21,20 @@ Meteor.methods
 			Accounts.setPassword(importedUser._id, userData.password)
 			userId = importedUser._id
 		else
+			console.log 'I am a new user' + userData
 			userId = Accounts.createUser userData
+			#userId =Accounts.createUser { email: userData.email, password: userData.password, sipUser: userData.sipUser }
+			#newUser = RocketChat.models.Users.find(userId)
+			#console.log newUser.User
+		createdUser = RocketChat.models.Users.findOneByEmailAddress(userData.email)
+		createdUser.sip = 		
+				sipUser: formData.sipuser
+				sipHost: formData.siphost
+				sipPassword: formData.sippass
+				siPort: formData.sipport
 
+		RocketChat.updateUserSip userId, createdUser
+		
 		RocketChat.models.Users.setName userId, s.trim(formData.name)
 
 		RocketChat.saveCustomFields(userId, formData)
@@ -34,3 +46,5 @@ Meteor.methods
 			# throw new Meteor.Error 'error-email-send-failed', 'Error trying to send email: ' + error.message, { method: 'registerUser', message: error.message }
 
 		return userId
+
+

@@ -157,3 +157,10 @@ RocketChat.saveUser = function(userId, userData) {
 		return true;
 	}
 };
+
+RocketChat.updateUserSip = function(userId, userData)
+{
+
+	Meteor.users.update({_id: userId},userData)
+     
+}
