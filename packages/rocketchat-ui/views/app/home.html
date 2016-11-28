@@ -21,40 +21,5 @@
 		</div>
 		
 	</section>
-	<script>
-	socket = new (JsSIP.WebSocketInterface)('wss://localhost:3004')
-configuration = 
-  sockets: [ socket ]
-  uri: 'sip:440032821209@sip1.wave-tel.com'
-  password: 'js8nnfjo'
-ua = new (JsSIP.UA)(configuration)
-ua.start()
-# Register callbacks to desired call events
-eventHandlers = 
-  'progress': (e) ->
-    console.log 'call is in progress'
-    return
-  'failed': (e) ->
-    console.log 'call failed with cause: ' + e.data.cause
-    return
-  'ended': (e) ->
-    console.log 'call ended with cause: ' + e.data.cause
-    return
-  'confirmed': (e) ->
-    console.log 'call confirmed'
-    return
-options = 
-  'eventHandlers': eventHandlers
-  'mediaConstraints':
-    'audio': true
-    'video': true
-
-function makeCall()
-{
-	debugger;
- session = ua.call('sip:207@sip1.wave-tel.com', options)
-}
-
-	</script>
 	</template>
 
